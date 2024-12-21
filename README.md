@@ -56,3 +56,14 @@ A **Circuit** is a library.
 
 ## Computational Class
 Deliver is turing complete, because you can simulate BF in it.
+
+## Example(s)
+a + b:
+```
+Require package id
+Put the package onto the pile
+Require package id
+Add the package to the pile
+Take the top package from the pile
+Report package id 
+```

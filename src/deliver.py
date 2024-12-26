@@ -7,6 +7,7 @@ stacks = [[] for _ in range(sz)]
 notes = {}
 codeFile = {}
 routineFile = {}
+record = {}
 def move(pos, distance):
     pos += distance
     pos = pos % sz
@@ -24,26 +25,55 @@ def match(words, str):
     else:
         return False
 
-def str2int(s):
-    if s == "TOP":
+def str2int(s, toInt = False):
+    # print(s)
+    if s == "TOP" and not toInt:
         return stacks[pos][-1]
-    elif s == "PACKAGE":
+    elif s == "PACKAGE" and not toInt:
         return package
-    elif s[0] == '-':
+    elif s[0] == '-' and not toInt:
         return -int(s[1:])
     else:
-        return int(s)
+        if s.isdigit() and not toInt:
+            return int(s)
+        
+        # s.replace("\\n", "\n")
+        # s.replace("\\\\", "\\")
+        # s = "Hello \n World!"
+
+        # print(s, "Hello \n World")
+        
+        # Convert the byte data to an integer by interpreting it as a large base-256 number
+        number = 0
+        for i in s:
+            number = number * (256 ** 4) + int(ord(i))
+        
+        return number
+
+def int2str(n):
+    # print(n)
+    if n == 0:
+        return ""
+    else:
+        return int2str(n // (256 ** 4)) + chr(n % (256 ** 4))
+
+def lexer(code):
+    return code.split("\n")
 
 def loadAndRunCode(filename):
-    with open(filename, "r") as file:
+    with open(filename, "r", encoding="utf-8") as file:
         code = file.read()
-        code_lines = code.split("\n")
+        code_lines = lexer(code)
         codeFile[filename] = code_lines
         runCode(code_lines, 0, len(code_lines) - 1, filename)
 
 def findMatchingEnd(code, current_line):
     nested_if_count = 1
     for i in range(current_line + 1, len(code)):
+        if code[i] == "":
+            continue
+        while code[i][0] == " " or code[i][0] == "\t":
+            code[i] = code[i][1:]
         if code[i].startswith("If"):
             nested_if_count += 1
         elif code[i] == "End":
@@ -51,10 +81,30 @@ def findMatchingEnd(code, current_line):
             if nested_if_count == 0:
                 return i
 
+buffer = []
+
+def input_stream(line):
+    global buffer
+    while True:
+        # print("Call from line " + str(line) + ":")
+        # print(buffer)
+        if not buffer:
+            # print("No buffer!")
+            buffer = input().split()
+        # print(buffer)
+        yield buffer.pop(0)
+
 def runCode(code, current_line, ed, filename):
     if current_line > ed:
         return
     # print(code[current_line])
+    if code[current_line] == "":
+        runCode(code, current_line + 1, ed, filename)
+        return
+    while code[current_line][0] == " " or code[current_line][0] == "\t":
+        code[current_line] = code[current_line][1:]
+    if '--' in code[current_line]:
+        code[current_line] = code[current_line].split('--')[0].strip()
     words = code[current_line].split()
     # print(words)
     global pos, package, stacks
@@ -64,6 +114,7 @@ def runCode(code, current_line, ed, filename):
         return
     while words[0] == " " or words[0] == "\t":
         words = words[1:]
+    
     if words[0] == "Move":
         distance = str2int(words[1])
         pos = move(pos, distance)
@@ -77,8 +128,11 @@ def runCode(code, current_line, ed, filename):
             stacks[pos].pop()
             runCode(code, current_line + 1, ed, filename)
     elif words[0] == "Let":
-        if match(words[:len(words) - 1], "Let the package to be"):
-            package = str2int(words[-1])
+        if match(words[:5], "Let the package to be"):
+            package = str2int(code[current_line][22:])
+            runCode(code, current_line + 1, ed, filename)
+        if match(words[:len(words)], "Let my game be fun"):
+            print("Do it yourself")
             runCode(code, current_line + 1, ed, filename)
     elif words[0] == "Put":
         if match(words, "Put the package onto the pile"):
@@ -112,14 +166,16 @@ def runCode(code, current_line, ed, filename):
                 runCode(code, current_line + 1, ed, filename)
             else:
                 runCode(code, findMatchingEnd(code, current_line) + 1, ed, filename)
-        elif match(words[:len(words) - 1], "If the pile's top package is"):
+        elif match(words[:6], "If the pile's top package is"):
             # print("Here!")
-            if stacks[pos][-1] == str2int(words[-1]):
+            # print(stacks[pos][-1], str2int(code[current_line][29:]))
+            if len(stacks[pos]) != 0 and stacks[pos][-1] == str2int(code[current_line][29:]):
                 runCode(code, current_line + 1, ed, filename)
             else:
                 runCode(code, findMatchingEnd(code, current_line) + 1, ed, filename)
-        elif match(words[:len(words) - 1], "If the pile's top package is not"):
-            if stacks[pos][-1] != str2int(words[-1]):
+        elif match(words[:6], "If the pile's top package isn't"):
+            # print("Here!")
+            if len(stacks[pos]) == 0 or stacks[pos][-1] != str2int(code[current_line][32:]):
                 runCode(code, current_line + 1, ed, filename)
             else:
                 runCode(code, findMatchingEnd(code, current_line) + 1, ed, filename)
@@ -130,7 +186,14 @@ def runCode(code, current_line, ed, filename):
             print(package, end="")
             runCode(code, current_line + 1, ed, filename)
         if match(words, "Report package name"):
-            print(chr(package), end="")
+            print(int2str(package), end="")
+            runCode(code, current_line + 1, ed, filename)
+    elif words[0] == "Require":
+        if match(words, "Require package id"):
+            package = int(next(input_stream(current_line)))
+            runCode(code, current_line + 1, ed, filename)
+        if match(words, "Require package name"):
+            package = str2int(next(input_stream(current_line)), True)
             runCode(code, current_line + 1, ed, filename)
     elif words[0] == "Routine":
         name = words[1][:len(words[1]) - 1]
@@ -148,11 +211,23 @@ def runCode(code, current_line, ed, filename):
             name = words[3]
             loadAndRunCode(name)
             runCode(code, current_line + 1, ed, filename)
+        if match(words[:len(words) - 1], "Follow the record"):
+            name = words[3]
+            name = record[str2int(name)]
+            runCode(codeFile[routineFile[name]], notes[name][0], notes[name][1], routineFile[name])
+            runCode(code, current_line + 1, ed, filename)
+    elif words[0] == "Record":
+        if match(words[:2], "Record routine"):
+            name = words[2]
+            record[str2int(words[4])] = name
+            runCode(code, current_line + 1, ed, filename)
 
 def main():
     if len(sys.argv) != 2:
         print("Usage: deliver <filename>")
         sys.exit(1)
+
+    # print(str2int("\n"))
     
     filename = sys.argv[1]
     loadAndRunCode(filename)

@@ -1,0 +1,159 @@
+-- This is the game, number guesser, where you basically guess number :P
+Follow the circuit PrintLetter.📦
+Routine minus1: -- Minus PACKAGE by 1
+    Put the package onto the pile
+    Let the package to be -1
+    Add the package to the pile
+    Take the top package from the pile
+End
+
+Routine minus1top: -- Minus TOP by 1
+    Move -1
+    Put the package onto the pile
+    Move 1
+    Let the package to be -1
+    Add the package to the pile
+    Move -1
+    Take the top package from the pile
+    Move 1
+End
+
+Routine put0: -- Put a zero onto current pile
+    Move -1
+    Put the package onto the pile
+    Move 1
+    Let the package to be 0
+    Put the package onto the pile
+    Move -1
+    Take the top package from the pile
+    Move 1
+End
+
+Routine put100: -- Put a 100 onto current pile
+    Move -1
+    Put the package onto the pile
+    Move 1
+    Let the package to be 100
+    Put the package onto the pile
+    Move -1
+    Take the top package from the pile
+    Move 1
+End
+
+Routine checkBigger: -- Check if PACKAGE is bigger then or equal to TOP, if it is, push PACKAGE into the stack
+    Move -1
+    If the pile's top package isn't 0
+        Follow the routine minus1top
+        Move 1
+        Follow the routine minus1
+        If the pile's top package is PACKAGE
+            -- It is indeed bigger
+            Move -1
+            Throw the top package from the pile away
+            Take the top package from the pile
+            Move 1
+            Put the package onto the pile
+            Move -1
+            Follow the routine put0
+            Move 1
+        End
+        Follow the routine checkBigger
+        Move -1
+    End
+    If the pile's top package is 0
+        Throw the top package from the pile away
+    End
+    Move 1
+End
+
+Routine clearStack:
+    If the pile has packages
+        Throw the top package from the pile away
+        Follow the routine clearStack
+    End
+End
+
+Routine StartMenu:
+    Let the package to be Welcome to gift guesser! Guess which number of gift is yours by asking Santa!
+    Report package name
+    Follow the routine PrintNewLine
+    Let the package to be Santa: Make your first guess!
+    Report package name
+    Follow the routine PrintNewLine
+End
+
+Routine mainLogic:
+    Let the package to be You: 
+    Report package name
+    Require package id
+    If the pile's top package isn't PACKAGE
+        Move 10
+        Put the package onto the pile
+        Move -10
+        Move 1
+        Put the package onto the pile
+        Follow the routine put100
+        Put the package onto the pile
+        Move -1
+        Take the top package from the pile
+        Put the package onto the pile
+        Move 2
+        Put the package onto the pile
+        Move -1
+        Take the top package from the pile
+        Move 1
+        Follow the routine checkBigger
+        If the pile's top package is PACKAGE
+            Put the package onto the pile
+            Let the package to be Santa: Make another guess! It's too big.
+            Report package name
+            Follow the routine PrintNewLine
+            Take the top package from the pile
+        End
+        If the pile's top package isn't PACKAGE
+            Put the package onto the pile
+            Let the package to be Santa: Make another guess! It's too small.
+            Report package name
+            Follow the routine PrintNewLine
+            Take the top package from the pile
+        End
+        Follow the routine clearStack
+        Move -1
+        Follow the routine clearStack
+        Move -1
+        Move 10
+        Take the top package from the pile
+        Move -10
+    End
+    If the pile's top package is PACKAGE
+        Move -1
+        Let the package to be 0
+        Put the package onto the pile
+        Move 1
+    End
+End
+
+Routine mainLoop:
+    Move -1
+    If the pile's top package isn't 0
+        Move 1
+        Follow the routine mainLogic
+        Follow the routine mainLoop
+        Move -1
+    End
+    Move 1
+End
+
+Routine EndingMenu:
+    Let the package to be Thanks for playing!
+    Report package name
+End
+
+Let the package to be 1
+Put the package onto the pile
+Move 1
+Follow the routine StartMenu
+Let the package to be 10
+Put the package onto the pile
+Follow the routine mainLoop
+Follow the routine EndingMenu

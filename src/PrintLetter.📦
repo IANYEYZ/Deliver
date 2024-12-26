@@ -1,0 +1,276 @@
+Routine PrintA:
+    Let the package to be 65
+    Report package name
+End
+
+Routine PrintB:
+    Let the package to be 66
+    Report package name
+End
+
+Routine PrintC:
+    Let the package to be 67
+    Report package name
+End
+
+Routine PrintD:
+    Let the package to be 68
+    Report package name
+End
+
+Routine PrintE:
+    Let the package to be 69
+    Report package name
+End
+
+Routine PrintF:
+    Let the package to be 70
+    Report package name
+End
+
+Routine PrintG:
+    Let the package to be 71
+    Report package name
+End
+
+Routine PrintH:
+    Let the package to be 72
+    Report package name
+End
+
+Routine PrintI:
+    Let the package to be 73
+    Report package name
+End
+
+Routine PrintJ:
+    Let the package to be 74
+    Report package name
+End
+
+Routine PrintK:
+    Let the package to be 75
+    Report package name
+End
+
+Routine PrintL:
+    Let the package to be 76
+    Report package name
+End
+
+Routine PrintM:
+    Let the package to be 77
+    Report package name
+End
+
+Routine PrintN:
+    Let the package to be 78
+    Report package name
+End
+
+Routine PrintO:
+    Let the package to be 79
+    Report package name
+End
+
+Routine PrintP:
+    Let the package to be 80
+    Report package name
+End
+
+Routine PrintQ:
+    Let the package to be 81
+    Report package name
+End
+
+Routine PrintR:
+    Let the package to be 82
+    Report package name
+End
+
+Routine PrintS:
+    Let the package to be 83
+    Report package name
+End
+
+Routine PrintT:
+    Let the package to be 84
+    Report package name
+End
+
+Routine PrintU:
+    Let the package to be 85
+    Report package name
+End
+
+Routine PrintV:
+    Let the package to be 86
+    Report package name
+End
+
+Routine PrintW:
+    Let the package to be 87
+    Report package name
+End
+
+Routine PrintX:
+    Let the package to be 88
+    Report package name
+End
+
+Routine PrintY:
+    Let the package to be 89
+    Report package name
+End
+
+Routine PrintZ:
+    Let the package to be 90
+    Report package name
+End
+
+Routine Printa:
+    Let the package to be 97
+    Report package name
+End
+
+Routine Printb:
+    Let the package to be 98
+    Report package name
+End
+
+Routine Printc:
+    Let the package to be 99
+    Report package name
+End
+
+Routine Printd:
+    Let the package to be 100
+    Report package name
+End
+
+Routine Printe:
+    Let the package to be 101
+    Report package name
+End
+
+Routine Printf:
+    Let the package to be 102
+    Report package name
+End
+
+Routine Printg:
+    Let the package to be 103
+    Report package name
+End
+
+Routine Printh:
+    Let the package to be 104
+    Report package name
+End
+
+Routine Printi:
+    Let the package to be 105
+    Report package name
+End
+
+Routine Printj:
+    Let the package to be 106
+    Report package name
+End
+
+Routine Printk:
+    Let the package to be 107
+    Report package name
+End
+
+Routine Printl:
+    Let the package to be 108
+    Report package name
+End
+
+Routine Printm:
+    Let the package to be 109
+    Report package name
+End
+
+Routine Printn:
+    Let the package to be 110
+    Report package name
+End
+
+Routine Printo:
+    Let the package to be 111
+    Report package name
+End
+
+Routine Printp:
+    Let the package to be 112
+    Report package name
+End
+
+Routine Printq:
+    Let the package to be 113
+    Report package name
+End
+
+Routine Printr:
+    Let the package to be 114
+    Report package name
+End
+
+Routine Prints:
+    Let the package to be 115
+    Report package name
+End
+
+Routine Printt:
+    Let the package to be 116
+    Report package name
+End
+
+Routine Printu:
+    Let the package to be 117
+    Report package name
+End
+
+Routine Printv:
+    Let the package to be 118
+    Report package name
+End
+
+Routine Printw:
+    Let the package to be 119
+    Report package name
+End
+
+Routine Printx:
+    Let the package to be 120
+    Report package name
+End
+
+Routine Printy:
+    Let the package to be 121
+    Report package name
+End
+
+Routine Printz:
+    Let the package to be 122
+    Report package name
+End
+
+Routine PrintSpace:
+    Let the package to be 32
+    Report package name
+End
+
+Routine PrintNewLine:
+    Put the package onto the pile
+    Let the package to be 10
+    Report package name
+    Take the top package from the pile
+End
+
+Routine PrintTab:
+    Let the package to be 9
+    Report package name
+End

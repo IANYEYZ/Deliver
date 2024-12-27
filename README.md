@@ -2,6 +2,9 @@
 
 Deliver is a programming language that simulate deliver package and put them on piles.
 
+## Before trying
+It's my first esolang, so it probably is a little(a LOT) bad
+
 ## Main Concept
 
 Deliver runs on a tape of stacks.

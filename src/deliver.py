@@ -1,4 +1,12 @@
 import sys
+import os
+
+def findFile(filename, search_paths):
+    for path in search_paths:
+        file_path = os.path.join(path, filename)
+        if os.path.isfile(file_path):
+            return file_path
+    return None
 
 pos = 0
 sz = 2560
@@ -61,6 +69,7 @@ def lexer(code):
     return code.split("\n")
 
 def loadAndRunCode(filename):
+    filename = findFile(filename, [os.getcwd(), "./lib"])
     with open(filename, "r", encoding="utf-8") as file:
         code = file.read()
         code_lines = lexer(code)
